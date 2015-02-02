@@ -51,7 +51,8 @@ def build_stump(data_arr, class_labels, d):
     data_matrix = mat(data_arr)
     label_mat = mat(class_labels).T
     m, n = shape(data_matrix)
-    num_steps = 10.0
+    # num_steps = 10.0
+    num_steps = float(m * n)
     best_stump = {}
     best_clas_est = mat(zeros((m, 1)))
     min_error = inf
@@ -67,13 +68,13 @@ def build_stump(data_arr, class_labels, d):
                 predicted_vals = stump_classify(data_matrix, i, thresh_val, inequal)
                 err_arr = mat(ones((m, 1)))
                 err_arr[predicted_vals == label_mat] = 0
-                # print("D: ", d.T)
-                # print("err_arr: ", err_arr)
+                print("D: ", d.T)
+                print("err_arr: ", err_arr)
                 weighted_error = d.T * err_arr
                 # print("split: dim %d, thresh %.2f, thresh inequal: %s, the weighted error is %.3f" %
                 #       (i, thresh_val, inequal, weighted_error))
 
-                # print("weighted_error: ", weighted_error)
+                print("weighted_error: ", weighted_error)
                 # print("min_error:", min_error)
                 # print(weighted_error.sum())
                 # if weighted_error.sum() < min_error:
@@ -94,7 +95,7 @@ def ada_boost_train_ds(data_arr, class_labels, num_it=40):
     agg_class_est = mat(zeros((m, 1)))
     for i in range(num_it):
         best_stump, error, class_est = build_stump(data_arr, class_labels, d)
-        # print("D:", d.T)
+        print("D:", d.T)
 
         alpha = float(0.5 * log((1.0 - error) / max(error, 1e-16)))
         best_stump['alpha'] = alpha
@@ -119,12 +120,13 @@ def ada_boost_train_ds(data_arr, class_labels, num_it=40):
 
 
 if __name__ == "__main__":
+    # Simple demo.
     dat_mat, class_labels = load_simp_data()
     D = mat(ones((5, 1)) / 5)
-    print(build_stump(dat_mat, class_labels, D))
+    # print(build_stump(dat_mat, class_labels, D))
+    classifier_array = ada_boost_train_ds(dat_mat, class_labels, 9)
 
-    # classifier_array = ada_boost_train_ds(dat_mat, class_labels, 9)
-
+    # For homework.
     # dat_mat, class_labels = data_process("hw2_adaboost_train.dat")
     # D = mat(ones((len(class_labels), 1)) / len(class_labels))
     # best_stump, error, class_est = build_stump(dat_mat, class_labels, D)
