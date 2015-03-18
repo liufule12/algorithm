@@ -13,7 +13,7 @@ struct ListNode {
 };
 
 
-bool insertInFront(ListNode **head, int val)
+static bool insertInFront(ListNode **head, int val)
 {
     // 单链表头部插入，倒序。
     ListNode *newElem = (ListNode *)malloc(sizeof(ListNode));
@@ -26,7 +26,7 @@ bool insertInFront(ListNode **head, int val)
     return true;
 }
 
-bool insertInPost(ListNode **head, int val)
+static bool insertInPost(ListNode **head, int val)
 {
     // 单链表尾部插入，正序。
     ListNode *newElem = (ListNode *)malloc(sizeof(ListNode));
@@ -49,8 +49,10 @@ bool insertInPost(ListNode **head, int val)
     return true;
 }
 
-bool traverse(ListNode **head)
+static bool traverse(ListNode **head)
 {
+    if (head == NULL)   return false;
+
     // 遍历链表。
     ListNode *elem = *head;
     while(elem != NULL){
