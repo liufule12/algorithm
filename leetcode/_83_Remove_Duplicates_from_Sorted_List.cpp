@@ -3,65 +3,7 @@
  * https://leetcode.com/problems/remove-duplicates-from-sorted-list/
  */
 
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
-
-// Definition for singly-linked list.
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
-
-bool insertInFront(ListNode **head, int val)
-{
-    // 单链表头部插入，倒序。
-    ListNode *newElem = (ListNode *)malloc(sizeof(ListNode));
-    if (!newElem)   return false;
-
-    newElem->val = val;
-    newElem->next = *head;
-    *head = newElem;
-
-    return true;
-}
-
-bool insertInPost(ListNode **head, int val)
-{
-    // 单链表尾部插入，正序。
-    ListNode *newElem = (ListNode *)malloc(sizeof(ListNode));
-    if (!newElem)   return false;
-
-    newElem->val = val;
-    newElem->next = NULL;
-    ListNode *tail = *head;
-    if (tail == NULL){
-        *head = newElem;
-        tail = newElem;
-    }
-    else{
-        while(tail->next != NULL){
-            tail = tail->next;
-        }
-        tail->next = newElem;
-    }
-
-    return true;
-}
-
-bool traverse(ListNode **head)
-{
-    // 遍历链表。
-    ListNode *elem = *head;
-    while(elem != NULL){
-        cout << elem->val << endl;
-        elem = elem->next;
-    }
-
-    return true;
-}
+#include "singlyLinkedList.h"
 
 class Solution {
 public:
@@ -123,12 +65,6 @@ int main()
     const int N = 5;
     int arry[N] = {1, 1, 2, 3, 3};
     for (int i=0; i < N; ++i)
-        // 单链表头部插入，倒序。
-        //if(!insertInFront(&List, arry[i])){
-        //    cout << "Error!" << endl;
-        //    return 1;
-        //}
-        // 单链表尾部插入，正序。
         if(!insertInPost(&List, arry[i])){
             cout << "Error!" << endl;
             return 1;
