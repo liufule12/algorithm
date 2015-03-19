@@ -15,13 +15,9 @@ public:
         ListNode *fast = head;
         ListNode *slow = head;
 
-        while(fast){
-            fast = fast->next;
-            if (!fast)  return false;
-            fast = fast->next;
-            if (!fast)  return false;
+        while(fast && fast->next){
+            fast = fast->next->next;
             slow = slow->next;
-
             if (fast == slow)   return true;
         }
 
@@ -34,7 +30,7 @@ int main()
 {
     ListNode *List1 = NULL;
     const int N = 5;
-    int arry[N] = {1, 2, 3, 4, 5};
+    int arry[N] = {1};
     for (int i = 0; i < N; ++i)
         // 单链表尾部插入，正序。
         if(!insertInPost(&List1, arry[i])){
