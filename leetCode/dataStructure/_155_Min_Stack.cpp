@@ -21,33 +21,33 @@ public:
 
     MinStack() {
         // We use the first element store the minimum value.
-        minStack = new ListNode(INT_MAX);
+        head = new ListNode(INT_MAX);
     }
 
     void push(int x) {
         ListNode *newData = new ListNode(x);
-        newData->next = minStack->next;
-        minStack->next = newData;
+        newData->next = head->next;
+        head->next = newData;
 
         // If the pushed element is smaller than the current minimum, then change the minimum value.
-        if (x < minStack->val)
-            minStack->val = x;
+        if (x < head->val)
+            head->val = x;
     }
 
     void pop() {
-        if (!minStack->next)
+        if (!head->next)
             return ;
 
-        ListNode *p = minStack->next;
-        minStack->next = minStack->next->next;
+        ListNode *p = head->next;
+        head->next = head->next->next;
 
         // If the popped element is the same as the current minimum, then find the new minimum value.
-        if (p->val == minStack->val){
-            minStack->val = INT_MAX;
-            ListNode *q = minStack->next;
+        if (p->val == head->val){
+            head->val = INT_MAX;
+            ListNode *q = head->next;
             while(q){
-                if (q->val < minStack->val)
-                    minStack->val = q->val;
+                if (q->val < head->val)
+                    head->val = q->val;
                 q = q->next;
             }
         }
@@ -55,23 +55,23 @@ public:
     }
 
     int top() {
-        if (minStack->next)
-            return minStack->next->val;
+        if (head->next)
+            return head->next->val;
         return NULL;
     }
 
     int getMin() {
-        if (minStack->next)
-            return minStack->val;
+        if (head->next)
+            return head->val;
         return NULL;
     }
 
     ListNode *getMinStack() {
-        return minStack;
+        return head;
     }
 
 private:
-    ListNode *minStack;
+    ListNode *head;
 };
 
 
