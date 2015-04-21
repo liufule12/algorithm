@@ -51,7 +51,7 @@ public:
                 q = q->next;
             }
         }
-        free(p);
+        delete(p);
     }
 
     int top() {
