@@ -3,7 +3,7 @@
  * https://leetcode.com/problems/linked-list-cycle/
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 
 class Solution {

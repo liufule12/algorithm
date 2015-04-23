@@ -3,7 +3,7 @@
  * https://leetcode.com/problems/remove-nth-node-from-end-of-list/
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 class Solution {
 public:

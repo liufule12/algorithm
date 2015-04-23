@@ -4,7 +4,7 @@
  */
 
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 
 class Solution {

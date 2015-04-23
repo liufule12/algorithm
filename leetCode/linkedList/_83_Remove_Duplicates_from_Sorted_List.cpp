@@ -3,7 +3,7 @@
  * https://leetcode.com/problems/remove-duplicates-from-sorted-list/
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 class Solution {
 public:

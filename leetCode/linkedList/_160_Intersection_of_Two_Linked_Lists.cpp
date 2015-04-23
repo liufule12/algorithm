@@ -3,11 +3,11 @@
  * https://leetcode.com/problems/intersection-of-two-linked-lists/
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         // 首先求得两个单链表之差，较短的链表移动差的步数。
         if (!headA || !headB )   return NULL;
 

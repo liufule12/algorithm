@@ -3,7 +3,7 @@
  * https://leetcode.com/problems/linked-list-cycle-ii/
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 
 class Solution {
@@ -62,7 +62,8 @@ int main()
 
     Solution A;
     ListNode *ans = A.detectCycle(List1);
-    traverse(&ans);
+    cout << ans->val << endl;
+    //traverse(&ans);
 
     return 0;
 }
