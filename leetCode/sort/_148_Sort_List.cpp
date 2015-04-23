@@ -4,7 +4,7 @@
  * Merge Sort, O(NlogN).
  */
 
-#include "singlyLinkedList.h"
+#include "..\singlyLinkedList.h"
 
 class Solution {
 public:
