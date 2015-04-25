@@ -22,7 +22,8 @@ public:
         while (n != 1) {
             int sum = 0;
             while (n != 0) {
-                // This statement will get different result.
+                // This statement will get different result because of the FPU precision.
+				// http://aleeee.com/fpu_sse.html
                 // sum += int(pow(n%10, 2));
                 sum += pow(n%10, 2);
                 n /= 10;
@@ -75,7 +76,6 @@ public:
                 return false;
             used[n] = true;
         }
-
         return true;
     }
 };
