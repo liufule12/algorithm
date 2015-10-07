@@ -98,7 +98,7 @@ double calcDistance(vector<double> data1, vector<double> data2)
 
 
 void KNN(vector<vector<double> > trainData, vector<vector<double> > testData,
-         vector<char> trainLabel, vector<char> &testLabel, int k, int L, int M, int N)
+         vector<char> trainLabel, int k, int L, int M, int N)
 {
     for (int i = 0; i < N; ++i) {
         // 计算每一个测试样本与所有训练样本的距离，并排序。
@@ -140,12 +140,11 @@ int main()
     vector<vector<double> > trainData;
     vector<vector<double> > testData;
     vector<char> trainLabel;
-    vector<char> testLabel;
 
     readTrainData(trainData, trainLabel, L, M);
     readTestData(testData, L, N);
 
-    KNN(trainData, testData, trainLabel, testLabel, k, L, M, N);
+    KNN(trainData, testData, trainLabel, k, L, M, N);
 
     return 0;
 }
