@@ -1,6 +1,36 @@
 /*
- * 游戏玩家分类，http://hihocoder.com/contest/ntest2015septdm/problem/3
- */
+ * KNN.
+
+输入：
+第一行输入依次为：k(k<=10000)，特征向量的长度L(L<=100)，训练数据行数M(M>k, M<=10000)，测试数据行数N(N<=10000)为测试数据行数。
+之后是M行训练数据和N行测试数据。每行中数据使用空格分隔。
+输出：
+预测类别
+
+测试数据：
+3 5 16 2
+0.19 0.04 0.06 0.22 0.11 A
+0.28 0.42 0.38 0.39 0.44 B
+0.71 0.61 0.54 0.52 0.54 C
+0.98 0.82 0.92 0.98 0.97 D
+0.05 0.03 0.15 0.01 0.11 A
+0.33 0.29 0.33 0.47 0.27 B
+0.72 0.52 0.61 0.71 0.68 C
+0.78 0.86 0.91 1.0 0.76 D
+0.01 0.17 0.14 0.15 0.2 A
+0.44 0.36 0.32 0.32 0.35 B
+0.67 0.65 0.57 0.58 0.52 C
+0.87 0.92 0.8 0.83 0.77 D
+0.01 0.11 0.14 0.12 0.07 A
+0.33 0.43 0.43 0.45 0.38 B
+0.57 0.54 0.75 0.7 0.64 C
+0.9 0.94 0.83 0.96 0.77 D
+0.29 0.29 0.42 0.36 0.27
+0.56 0.67 0.71 0.66 0.7
+输出：
+B
+C
+*/
 
 #include <iostream>
 #include <vector>
@@ -17,19 +47,9 @@ struct sample {
 };
 
 
-bool cmp1(sample a, sample b)
+bool cmp(sample a, sample b)
 {
-    if (a.distance == b.distance)
-        return a.label < b.label;
     return a.distance < b.distance;
-}
-
-
-bool cmp2(pair<char, int> a, pair<char, int> b)
-{
-    if (a.second == b.second)
-        return a.first < b.first;
-    return a.second > b.second;
 }
 
 
@@ -72,7 +92,7 @@ double calcDistance(vector<double> data1, vector<double> data2)
     int length = data1.size();
     double distance = 0.0;
     for (int i = 0; i < length; ++i)
-        distance += pow(data1[i] - data2[i], 2);
+        distance += (data1[i] - data2[i]) * (data1[i] - data2[i]);
     return sqrt(distance);
 }
 
@@ -89,43 +109,27 @@ void KNN(vector<vector<double> > trainData, vector<vector<double> > testData,
             tmpDistance.label = trainLabel[j];
             distances.push_back(tmpDistance);
         }
-        sort(distances.begin(), distances.end(), cmp1);
+        sort(distances.begin(), distances.end(), cmp);
 
-        // 选择前k个样本的距离，投票选择类别。
+        // 选择前k个样本的距离，确定前k个点所在类别出现频率。
         map<char, int> labelMap;
         for (int j = 0; j < k; ++j) {
             if (!labelMap[distances[j].label])
                 labelMap[distances[j].label] = 0;
             labelMap[distances[j].label] += 1;
         }
-        // 如果k个样本后面的距离和第k个相比相同，则存入该类别。
-        for (int j = k; j < M; ++j) {
-            if (distances[j].distance == distances[k-1].distance) {
-                if (!labelMap[distances[j].label])
-                    labelMap[distances[j].label] = 0;
-                labelMap[distances[j].label] += 1;
-            } else
-                break;
-        }
 
-        // 将labelMap转换成labelVec，并排序。
-        vector<pair<char, int> > labelVec;
+        // 找到labelMap中值最大的类别
+        int maxVal = 0;
+        char resLabel;
         for (map<char, int>::iterator it = labelMap.begin(); it != labelMap.end(); ++it)
-            labelVec.push_back(make_pair((*it).first, (*it).second));
-        sort(labelVec.begin(), labelVec.end(), cmp2);
+            if (it->second > maxVal) {
+                maxVal = it->second;
+                resLabel = it->first;
+            }
 
         // 输出类别。
-        string res = "";
-        for (int j = 0; j < labelVec.size(); ++j) {
-            res += labelVec[j].first;
-            if (j + 1 >= labelVec.size() || labelVec[j].second != labelVec[j+1].second)
-                break;
-        }
-
-        if (i == 0)
-            cout << res;
-        else
-            cout << "\n" << res;
+        cout << resLabel << endl;
     }
 }
 
@@ -145,44 +149,3 @@ int main()
 
     return 0;
 }
-
-/*
-测试数据：
-3 5 16 2
-0.19 0.04 0.06 0.22 0.11 A
-0.28 0.42 0.38 0.39 0.44 B
-0.71 0.61 0.54 0.52 0.54 C
-0.98 0.82 0.92 0.98 0.97 D
-0.05 0.03 0.15 0.01 0.11 A
-0.33 0.29 0.33 0.47 0.27 B
-0.72 0.52 0.61 0.71 0.68 C
-0.78 0.86 0.91 1.0 0.76 D
-0.01 0.17 0.14 0.15 0.2 A
-0.44 0.36 0.32 0.32 0.35 B
-0.67 0.65 0.57 0.58 0.52 C
-0.87 0.92 0.8 0.83 0.77 D
-0.01 0.11 0.14 0.12 0.07 A
-0.33 0.43 0.43 0.45 0.38 B
-0.57 0.54 0.75 0.7 0.64 C
-0.9 0.94 0.83 0.96 0.77 D
-0.29 0.29 0.42 0.36 0.27
-0.56 0.67 0.71 0.66 0.7
-
-输出：
-B
-C
-
-2 2 5 2
-0 0 C
-1 0 B
-1 1 B
-1 2 A
-2 1 A
-1 1
-3 3
-
-输出：
-AB
-A
-
- */
